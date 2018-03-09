@@ -1,2 +1,6 @@
-# Calculator-Kalk-QT
-Binary,Hex and Octal Calculator
+# Kalk
+# C++ Object Oriented
+run:
+$ qmake
+$ make
+$ ./Kalk
