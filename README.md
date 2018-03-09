@@ -1,4 +1,4 @@
-# Calculator, Kalk, Binary,Hex and Octal
+# Kalk: Binary, Hex and Octal Calculator.
 # C++ Object Oriented
 run:
 $ qmake
