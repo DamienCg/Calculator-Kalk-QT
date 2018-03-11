@@ -37,7 +37,8 @@ SOURCES += main.cpp \
            View/hex_graphic.cpp \
            View/octal_graphic.cpp \
     Model/calcola.cpp \
-    Controller/controller.cpp
+    Controller/controller.cpp \
+    Model/arithmetic_types.cpp
 
 RESOURCES += \
     image/image.qrc

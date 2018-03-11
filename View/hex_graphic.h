@@ -14,7 +14,7 @@ void calcolaoperazioniprimarie();
 void calcolaconversioneHtoType();
 void calcolaconversioneDtoH();
 void CalcolaColoreRGBresultop1op2();
-void CalcolaColoreRGB();//controllare se colore valido max 6 caratteri
+void CalcolaColoreRGB();
 
 private:
     QLineEdit* op1;

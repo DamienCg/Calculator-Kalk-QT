@@ -13,7 +13,8 @@ void calcolaoperazioniprimarie();
 void calcolaconversioneOtoType();
 void calcolaconversioneDtoO();
 void calcola_Emanuel_Swedenborg();
-void calcolaNumESsultop1op2();
+void calcolaNumESs();
+void enable_Emanuel_Swedenborg(const QString &);
 
 private:
     QLineEdit* op1;
@@ -28,12 +29,12 @@ private:
     QComboBox* operazioniDiConversione;
     QLineEdit* resultES;
     QLineEdit* inputES;
+    QPushButton* calcolaESdiconv;
     octal_controller ctrl;
     const static int OperationIndex = 2;
 
 public:
     octal_graphic(QStackedWidget*, QWidget * = 0);
-    void setlabelerror(QString);
 };
 
 #endif // OCTAL_GRAPHIC_H

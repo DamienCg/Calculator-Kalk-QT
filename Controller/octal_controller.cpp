@@ -3,11 +3,11 @@
 
 octal_controller::octal_controller(): Controller(new Octal(),new Octal()){}
 
-QString octal_controller::CalcolaOtoOtherTypes(const QString & b, const char type) try{
+QString octal_controller::CalcolaOtoOtherTypes(const QString & b, const char &type) try{
     string oct=b.toStdString();
     string r = "";
     Octal temp = Octal(oct);
-    int x = temp.conversion_in_real();
+    double x = temp.conversion_in_real();
 
     switch (type) {
     case 'H':
@@ -25,16 +25,22 @@ QString octal_controller::CalcolaOtoOtherTypes(const QString & b, const char typ
 }
 catch(MyException){return QString();}
 
-QString octal_controller::CalcolaConversioneDtoO(const QString & t){
+QString octal_controller::CalcolaConversioneDtoO(const QString & t)try{
+    Arithmetic_Types::parser_decimal(t);
     string dec = t.toStdString();
     Octal temp = Octal();
     temp = temp.Converti_In_Tipo(dec);
     return QString::fromStdString(temp.ConvertiInStringa());
 }
+catch(MyException){return QString();}
 
-QString octal_controller::CalcolaEmanuel_Swedenborg(const QString & t){
-    string y = t.toStdString();
-    int x=stoi(y);
+
+QString octal_controller::CalcolaEmanuel_Swedenborg(const QString & t)try{
+    Arithmetic_Types::parser_decimal(t);
+    string str = t.toStdString();
+    const char *cstr = str.c_str();
+    long int x = std::strtol(cstr,nullptr,10);
     string s = Octal::Charle_S_and_Emanuel_S(x);
     return QString::fromStdString(s);
 }
+catch(MyException){return QString();}

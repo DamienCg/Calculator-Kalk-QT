@@ -1,14 +1,13 @@
 #include "octal_graphic.h"
-#include "choose_type.h"
 #include <QGridLayout>
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
-#include <iostream>
+#include <QGroupBox>
+#include <QGroupBox>
 
 void octal_graphic::calcolaoperazioniprimarie(){
-/*op1+op2 && op1-op2 && op1*op2 && op1/op2*/
     if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
         QString op=operazioni->currentText();
         QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
@@ -17,11 +16,7 @@ void octal_graphic::calcolaoperazioniprimarie(){
 }
 
 void octal_graphic::calcolaconversioneOtoType(){
-    /* B->H && B->O && B->D && B->rad*/
     QString x = "";
-    if(!checkOctal(inputO->text()))
-        showMessagebox("0-7 Only");
-    else{
         if(operazioniDiConversione->currentText() == "Hex")
     x = octal_controller::CalcolaOtoOtherTypes(inputO->text(),'H');
         else if(operazioniDiConversione->currentText() == "Bin")
@@ -32,45 +27,50 @@ void octal_graphic::calcolaconversioneOtoType(){
     x=ctrl.CotruisciECalcolaRadice(inputO->text());
 
     resultconvOtoDHB->setText(x);
-    }
+
 }
 
 void octal_graphic::calcolaconversioneDtoO(){
-    if(!checkDecimal(inputD->text()))
-        showMessagebox("0-9 Only");
-    else{
         QString q = octal_controller::CalcolaConversioneDtoO(inputD->text());
         resultconvDtoO->setText(q);
-    }
 }
 
 void octal_graphic::calcola_Emanuel_Swedenborg(){
-if(!checkDecimal(inputES->text()))
-    showMessagebox("0-9 Only");
-  else{
     QString q = octal_controller::CalcolaEmanuel_Swedenborg(inputES->text());
     resultES->setText(q);
-}
+
 }
 
-void octal_graphic::calcolaNumESsultop1op2(){
-inputES->setText(Result->text());
+void octal_graphic::calcolaNumESs(){
+inputES->setText(resultconvOtoDHB->text());
 calcola_Emanuel_Swedenborg();
 }
 
+void octal_graphic::enable_Emanuel_Swedenborg(const QString& x){
+    if(x != "Dec"){
+       calcolaESdiconv->setEnabled(false);
+       calcolaESdiconv->setStyleSheet("text-decoration: line-through;");
+    }
+    else{
+       calcolaESdiconv->setStyleSheet("text-decoration: none;");
+       calcolaESdiconv->setEnabled(true);
+    }
+}
+
 octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_graphic(stack, parent),
-    op1(new QLineEdit(this)),
-    operazioni(new QComboBox(this)),
-    op2(new QLineEdit(this)),
-    labelresult(new QLabel(this)),
-    Result(new QLineEdit(this)),
+  op1(new QLineEdit(this)),
+  operazioni(new QComboBox(this)),
+  op2(new QLineEdit(this)),
+  labelresult(new QLabel(this)),
+  Result(new QLineEdit(this)),
   inputO(new QLineEdit(this)),
   inputD(new QLineEdit(this)),
   resultconvOtoDHB(new QLineEdit(this)),
   resultconvDtoO(new QLineEdit(this)),
   operazioniDiConversione(new QComboBox(this)),
   resultES(new QLineEdit(this)),
-  inputES(new QLineEdit(this)){
+  inputES(new QLineEdit(this)),
+  calcolaESdiconv(new QPushButton(this)){
 
  setWindowIndex(octal_graphic::OperationIndex);
 
@@ -82,9 +82,7 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
  QLabel* labelconversioneDtoO = new QLabel(this);
  QPushButton* calcolaconvDtoO = new QPushButton(this);
  QLabel*labelcalcolaES  = new QLabel(this);
- QPushButton* calcolaES  = new QPushButton(this);
- QPushButton* calcolaESsultop1op2 = new QPushButton(this);
-
+  QPushButton* calcolaES = new QPushButton(this);
 
  /* Logical View TOP */
  QGroupBox* group1 = new QGroupBox(this);
@@ -96,7 +94,6 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
  grbox1->addWidget(calcola,2,0,1,1);
  grbox1->addWidget(labelresult,2,1,1,1);
  grbox1->addWidget(Result,2,2,1,1);
- grbox1->addWidget(calcolaESsultop1op2,3,2,1,1);
  addLayout(group1,0);
 
  /* Logical View Center */
@@ -107,6 +104,7 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
  grbox1->addWidget(operazioniDiConversione,1,1,1,1);
  grbox1->addWidget(resultconvOtoDHB,1,2,1,1);
  grbox1->addWidget(calcolaconvOtoDHB,2,0,1,1);
+ grbox1->addWidget(calcolaESdiconv,2,2,1,1);
  addLayout(group1,0);
 
  /* Logical View Botton 0 */
@@ -161,14 +159,16 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
  calcolaES->setText("Calcola");
  inputES->setPlaceholderText("64");
  resultES->setPlaceholderText("loo");
- calcolaESsultop1op2->setText("Number System Emanuel.S");
+ calcolaESdiconv->setText("Number System Emanuel.S");
 
  /* Signal */
  connect(calcola, SIGNAL(clicked(bool)), this, SLOT(calcolaoperazioniprimarie()));
  connect(calcolaconvOtoDHB, SIGNAL(clicked(bool)), this, SLOT(calcolaconversioneOtoType()));
  connect(calcolaconvDtoO, SIGNAL(clicked(bool)), this, SLOT(calcolaconversioneDtoO()));
  connect(calcolaES, SIGNAL(clicked(bool)), this, SLOT(calcola_Emanuel_Swedenborg()));
- connect(calcolaESsultop1op2, SIGNAL(clicked(bool)), this, SLOT(calcolaNumESsultop1op2()));
-
+ connect(calcolaESdiconv, SIGNAL(clicked(bool)), this, SLOT(calcolaNumESs()));
+ connect(operazioniDiConversione, SIGNAL(currentIndexChanged(QString)), this, SLOT(enable_Emanuel_Swedenborg(QString)));
+ connect(operazioniDiConversione, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaconversioneOtoType()));
+ connect(operazioni, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaoperazioniprimarie()));
 }
 

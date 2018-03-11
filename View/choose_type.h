@@ -6,7 +6,6 @@ class QComboBox;
 class QVBoxLayout;
 
 class Choose_Type: public QWidget{
-
     Q_OBJECT
 private:
     QComboBox* listatipi;
@@ -19,7 +18,6 @@ signals:
 public:
     Choose_Type(QWidget* = 0);
     void switchToType(int)const;
-    virtual ~Choose_Type();
 };
 
 #endif // CHOOSE_TYPE_H

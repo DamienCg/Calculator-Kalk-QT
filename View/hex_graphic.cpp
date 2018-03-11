@@ -1,14 +1,12 @@
 #include "hex_graphic.h"
-#include "choose_type.h"
 #include <QGridLayout>
 #include <QComboBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
-
+#include <QGroupBox>
 
 void Hex_Graphic::calcolaoperazioniprimarie(){
-/*op1+op2 && op1-op2 && op1*op2 && op1/op2*/
     if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
         QString op=operazioni->currentText();
         QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
@@ -19,10 +17,6 @@ void Hex_Graphic::calcolaoperazioniprimarie(){
 
 void Hex_Graphic::calcolaconversioneHtoType(){
     QString x = "";
-    if(!checkHex(inputH->text()))
-        showMessagebox("0-9 and A-F Only");
-    else{
-    /* H->B && H->O && H->D && H->rad*/
      if(operazioniDiConversione->currentText() == "Bin")
         x = hex_controller::CalcolaHtoOtherTypes(inputH->text(),'B');
      else if(operazioniDiConversione->currentText() == "Oct")
@@ -33,29 +27,33 @@ void Hex_Graphic::calcolaconversioneHtoType(){
         x=ctrl.CotruisciECalcolaRadice(inputH->text());
 
     resultconvHtoDBO->setText(x);
-    }
+
 }
 
 void Hex_Graphic::calcolaconversioneDtoH(){
-    if(!checkDecimal(inputD->text()))
-        showMessagebox("0-9 Only");
-    else{
     QString q = hex_controller::CalcolaConversioneDtoH(inputD->text());
     resultconvDtoH->setText(q);
-    }
+
 }
 
 void Hex_Graphic::CalcolaColoreRGBresultop1op2(){
-    inputcolore->setText(Result->text());
+    QString par = Result->text();
+    if(par.length() >0){
+        if(par.at(0) == '-')
+            par.remove(0,1);
+
+    inputcolore->setText(par);
     CalcolaColoreRGB();
+    }
 }
 
 
 void Hex_Graphic::CalcolaColoreRGB(){
 resultcolore->setText("");
-QString q = hex_controller::CalcolaColore(inputcolore->text());
-    if(inputcolore->text().length() == 6 && checkHex(inputcolore->text()) )
-        resultcolore->setStyleSheet("background: "+q+"; border-radius: 6px;}");
+
+const QString colore = hex_controller::CalcolaColore(inputcolore->text());
+    if(inputcolore->text().length() == 6)
+        resultcolore->setStyleSheet(colore);
     else
         showMessagebox("Stringa non Valida, Deve essere lunga 6, senza spazi");
 }
@@ -164,7 +162,7 @@ Hex_Graphic::Hex_Graphic(QStackedWidget * stack, QWidget * parent):Front_graphic
  calcolacoloreresultop1op2->setText("Calcola RGB");
  labelcolore->setText("Calcola Colore RGB:");
  calcolacolore->setText("Calcola RGB");
- resultcolore->setStyleSheet("background: #0000FF; border-radius: 6px;}");
+ resultcolore->setStyleSheet("background: #0000FF; border-radius: 6px;");
 
  /* Signal */
  connect(calcola, SIGNAL(clicked(bool)), this, SLOT(calcolaoperazioniprimarie()));
@@ -172,5 +170,6 @@ Hex_Graphic::Hex_Graphic(QStackedWidget * stack, QWidget * parent):Front_graphic
  connect(calcolaconvDtoH, SIGNAL(clicked(bool)), this, SLOT(calcolaconversioneDtoH()));
  connect(calcolacolore, SIGNAL(clicked(bool)), this, SLOT(CalcolaColoreRGB()));
  connect(calcolacoloreresultop1op2, SIGNAL(clicked(bool)), this, SLOT(CalcolaColoreRGBresultop1op2()));
-
+ connect(operazioniDiConversione, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaconversioneHtoType()));
+ connect(operazioni, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaoperazioniprimarie()));
 }

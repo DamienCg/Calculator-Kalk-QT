@@ -2,12 +2,11 @@
 #define BINARY_GRAPHIC_H
 #include "front_graphic.h"
 #include "./Controller/binary_controller.h"
-#include "choose_type.h"
-#include <QGroupBox>
+class QLineEdit;
+class QComboBox;
 
 class binary_graphic: public Front_graphic{
     Q_OBJECT
-
 public slots:
 void calcolaoperazioniprimarie();
 void calcolaconversioneBtoType();

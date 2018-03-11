@@ -1,4 +1,7 @@
 #include "front_graphic.h"
+#include <QStackedWidget>
+#include <QMessageBox>
+#include <QVBoxLayout>
 
 void Front_graphic::OpenTypes(int a){
     if( a != windowIndex)
@@ -42,18 +45,6 @@ bool Front_graphic::checkBeforeContinue(const QString & op1, const QString & op2
 }
 
 
-bool Front_graphic::checkHex(const QString & x)const{
-   return x.indexOf(QRegExp("^[a-fA-F0-9]+$"), 0) != -1;
-}
-
-bool Front_graphic::checkDecimal(const QString & x)const{
-    return x.indexOf(QRegExp("^[0-9]+$"), 0) != -1;
-}
-
-bool Front_graphic::checkOctal(const QString & x) const{
-    return x.indexOf(QRegExp("^[0-7]+$"), 0) != -1;
-}
-
 void Front_graphic::showMessagebox(const QString & x) const{
     mex->setStyleSheet("color: black;");
     mex->setText(x);
@@ -64,5 +55,3 @@ void Front_graphic::showMessagebox(const QString & x) const{
 void Front_graphic::addLayout(QWidget* p, int stretch){
     layout->addWidget(p,stretch,Qt::AlignTop);
 }
-
-Front_graphic::~Front_graphic(){}

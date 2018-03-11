@@ -1,7 +1,12 @@
 #include "binary_graphic.h"
+#include <QLineEdit>
+#include <QComboBox>
+#include <QLabel>
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QPushButton>
 
 void binary_graphic::calcolaoperazioniprimarie(){
-    /*op1+op2 && op1-op2 && op1*op2 && op1/op2*/
     if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
             QString op=operazioni->currentText();
             QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
@@ -10,7 +15,6 @@ void binary_graphic::calcolaoperazioniprimarie(){
 }
 
 void binary_graphic::calcolaconversioneBtoType(){
-    /* B->H && B->O && B->D && B->rad*/
     QString x = "";
         if(operazioniDiConversione->currentText() == "Hex")
     x = binary_controller::CalcolaBtoOtherTypes(inputB->text(),'H');
@@ -26,12 +30,8 @@ void binary_graphic::calcolaconversioneBtoType(){
 }
 
 void binary_graphic::calcolaconversioneDtoB(){
-    if(!checkDecimal(inputD->text()))
-        showMessagebox("0-9 Only");
-    else{
     QString q = binary_controller::CalcolaConversioneDtoB(inputD->text());
     resultconvDtoB->setText(q);
-    }
 }
 
 void binary_graphic::Calcolapercorsoresultop1op2(){
@@ -40,7 +40,6 @@ void binary_graphic::Calcolapercorsoresultop1op2(){
 }
 
 void binary_graphic::calcolapercorsoA(){
-    /* B->sx,dx,.... */
     QString rit = binary_controller::Calcolapercorsoalbero(inputpercorso->text());
     perorsoalbero->setText(rit);
 }
@@ -156,5 +155,6 @@ binary_graphic::binary_graphic(QStackedWidget * stack , QWidget *parent):Front_g
  connect(calcolaconvDtoB, SIGNAL(clicked(bool)), this, SLOT(calcolaconversioneDtoB()));
  connect(calcolapercorso, SIGNAL(clicked(bool)), this, SLOT(calcolapercorsoA()));
  connect(calcolapercorsosultop1op2, SIGNAL(clicked(bool)), this, SLOT(Calcolapercorsoresultop1op2()));
-
+ connect(operazioniDiConversione, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaconversioneBtoType()));
+ connect(operazioni, SIGNAL(currentIndexChanged(QString)), this, SLOT(calcolaoperazioniprimarie()));
 }

@@ -2,11 +2,11 @@
 
 binary_controller::binary_controller(): Controller(new Binary(), new Binary()){}
 
-QString binary_controller::CalcolaBtoOtherTypes(const QString & b, const char type) try{
+QString binary_controller::CalcolaBtoOtherTypes(const QString & b, const char &type) try{
     string bin=b.toStdString();
     string r = "";
     Binary temp = Binary(bin);
-    int x = temp.conversion_in_real();
+    double x = temp.conversion_in_real();
 
     switch (type) {
     case 'H':
@@ -24,23 +24,20 @@ QString binary_controller::CalcolaBtoOtherTypes(const QString & b, const char ty
 }
 catch(MyException){return QString();}
 
+
 QString binary_controller::Calcolapercorsoalbero(const QString & r)try{
     Binary::parser(r.toStdString());
-    QString rit = "Root: ";
-    string str = r.toStdString();
-      for (string::iterator it=str.begin(); it!=str.end(); ++it){
-          if(*it == '1')
-              rit=rit+"->dx";
-                      else
-                      rit=rit+"->sx";
-      }
-      return rit;
+    string temp= Binary::perorsoBinaryTree(r.toStdString());
+    return QString::fromStdString(temp);
 }
 catch(MyException){return QString();}
 
-QString binary_controller::CalcolaConversioneDtoB(const QString & t){
-    string dec = t.toStdString();
+
+QString binary_controller::CalcolaConversioneDtoB(const QString & t)try{
     Binary temp = Binary();
+    Arithmetic_Types::parser_decimal(t);
+    string dec = t.toStdString();
     temp = temp.Converti_In_Tipo(dec);
     return QString::fromStdString(temp.ConvertiInStringa());
 }
+catch(MyException){return QString();}

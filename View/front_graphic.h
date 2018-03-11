@@ -1,20 +1,12 @@
 #ifndef FRONTGRAPHIC_H
 #define FRONTGRAPHIC_H
-#include <QWidget>
 #include "choose_type.h"
-#include <QGridLayout>
-#include <QComboBox>
-#include <QLabel>
-#include <QStackedWidget>
-#include <QGroupBox>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QMessageBox>
-#include <QVBoxLayout>
-#include <QPixmap>
+#include <QWidget>
+class QStackedWidget;
+class QMessageBox;
+class QVBoxLayout;
 
 class Front_graphic: public QWidget{
-
     Q_OBJECT
 public slots:
 virtual void OpenTypes(int);
@@ -30,13 +22,8 @@ protected:
 public:
     Front_graphic(QStackedWidget *, QWidget* = 0);
     bool checkBeforeContinue(const QString &,const QString &, const QString &)const;
-    bool checkHex(const QString &)const;
-    bool checkDecimal(const QString &)const;
-    bool checkOctal(const QString &)const;
     void showMessagebox(const QString &)const;
     void addLayout(QWidget*,int);
-    virtual ~Front_graphic();
-
 };
 
 #endif // FRONTGRAPHIC_H

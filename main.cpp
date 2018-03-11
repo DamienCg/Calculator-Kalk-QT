@@ -5,6 +5,8 @@
 #include <QStackedWidget>
 #include <QApplication>
 #include <QPixmap>
+#include <QIcon>
+
 int main(int argc, char *argv[]){
 
     QApplication Kalk(argc, argv);
@@ -14,7 +16,7 @@ int main(int argc, char *argv[]){
     Hex_Graphic* HexGrap = new Hex_Graphic(Stack);
     octal_graphic* OctalGrap= new octal_graphic(Stack);
 
-    Stack->setFixedSize(600,620);
+    Stack->setFixedSize(600,650);
     QPixmap bkgnd(":/bg1.jpg");
     bkgnd = bkgnd.scaled(Stack->size(), Qt::IgnoreAspectRatio);
     QPalette palette;

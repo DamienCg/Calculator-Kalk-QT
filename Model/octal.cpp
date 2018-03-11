@@ -12,7 +12,7 @@ Octal::Octal(string str){
 }
 
 Arithmetic_Types *Octal::ADD(Arithmetic_Types * op2){
-    int temp= conversion_in_real()+op2->conversion_in_real();
+    long double temp= conversion_in_real()+op2->conversion_in_real();
     string str = std::to_string(temp);
     oct.clear();
     oct = (Converti_In_Tipo(str)).oct;
@@ -20,17 +20,22 @@ Arithmetic_Types *Octal::ADD(Arithmetic_Types * op2){
 }
 
 Arithmetic_Types *Octal::SUB(Arithmetic_Types * op2){
-    int temp= conversion_in_real()-op2->conversion_in_real();
+    bool negativo=false;
+    long double temp= conversion_in_real()-op2->conversion_in_real();
+    if(temp < 0){
+        negativo=true;
+        temp=temp*-1;
+    }
     string str = std::to_string(temp);
     oct.clear();
     oct = (Converti_In_Tipo(str)).oct;
-    if(temp < 0)
+    if(negativo)
         oct.push_front('-');
     return this;
 }
 
 Arithmetic_Types *Octal::MUL(Arithmetic_Types * op2){
-    int temp= conversion_in_real()*op2->conversion_in_real();
+    long double temp= conversion_in_real()*op2->conversion_in_real();
     string str = std::to_string(temp);
     oct.clear();
     oct = (Converti_In_Tipo(str)).oct;
@@ -38,17 +43,17 @@ Arithmetic_Types *Octal::MUL(Arithmetic_Types * op2){
 }
 
 Arithmetic_Types *Octal::DIV(Arithmetic_Types * op2){
-    int temp= conversion_in_real()/op2->conversion_in_real();
+    long double temp= conversion_in_real()/op2->conversion_in_real();
     string str = std::to_string(temp);
     oct.clear();
     oct = (Converti_In_Tipo(str)).oct;
     return this;
 }
 
-double Octal::conversion_in_real() const{
+long double Octal::conversion_in_real() const{
 
     int size=oct.size()-1;
-    int op1=0; int tot=0;
+    long double op1=0; long double tot=0;
         for (std::list<char>::const_iterator it=oct.begin(); it != oct.end(); ++it){
             char a = (*it);
             op1 = a-48;
@@ -66,18 +71,19 @@ string Octal::ConvertiInStringa() const{
     return rit;
 }
 
-void Octal::setNewValue(string str){
+void Octal::setNewValue(const string &str){
     parser(str);
     oct.clear();
         for (string::const_iterator it = str.begin(), end = str.end(); it != end; ++it)
             oct.push_back(*it);
 }
 
-Octal Octal::Converti_In_Tipo(string t){
-if(t=="")
-    return Octal("0");
+Octal Octal::Converti_In_Tipo(const string &str){
+    if(str=="")
+        return Octal("0");
 
-int x=stoi(t);
+    const char *cstr = str.c_str();
+    long int x = std::strtol(cstr,nullptr,10);
 
 Octal aux;
 if(x==0){aux.oct.push_front('0'); return aux;}
@@ -91,7 +97,7 @@ if(x==0){aux.oct.push_front('0'); return aux;}
  return aux;
 }
 
-string Octal::Charle_S_and_Emanuel_S(int x){
+string Octal::Charle_S_and_Emanuel_S(long int x){
     string rit = "";
     string t = std::to_string(x);
     Octal temp = Converti_In_Tipo(t);
@@ -111,7 +117,7 @@ double Octal::radice() const{
     return result;
 }
 
-void Octal::parser(string str){
+void Octal::parser(const string &str){
     string err ="0-7 only";
     bool lanciaecc=true;
       for (string::const_iterator it = str.begin(), end = str.end(); it != end; ++it){
