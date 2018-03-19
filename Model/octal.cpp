@@ -79,6 +79,9 @@ void Octal::setNewValue(const string &str){
 }
 
 Octal Octal::Converti_In_Tipo(const string &str){
+
+    Arithmetic_Types::parser_decimal(str);
+
     if(str=="")
         return Octal("0");
 
@@ -97,10 +100,12 @@ if(x==0){aux.oct.push_front('0'); return aux;}
  return aux;
 }
 
-string Octal::Charle_S_and_Emanuel_S(long int x){
+string Octal::Charle_S_and_Emanuel_S(const string &str){
+
+    Arithmetic_Types::parser_decimal(str);
     string rit = "";
-    string t = std::to_string(x);
-    Octal temp = Converti_In_Tipo(t);
+
+    Octal temp = Converti_In_Tipo(str);
     for (std::list<char>::const_iterator it=temp.oct.begin(); it != temp.oct.end(); ++it){
         char a = (*it);
         int n = a-48;

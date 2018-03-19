@@ -8,8 +8,7 @@ Binary::Binary(string str){
 Arithmetic_Types *Binary::ADD(Arithmetic_Types * op2){
     long double temp= conversion_in_real()+op2->conversion_in_real();
     string str = std::to_string(temp);
-    op.clear();
-    op = (Converti_In_Tipo(str)).op;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
@@ -21,31 +20,29 @@ Arithmetic_Types *Binary::SUB(Arithmetic_Types * op2){
         temp=temp*-1;
     }
     string str = std::to_string(temp);
-    op.clear();
-    op = (Converti_In_Tipo(str)).op;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     if(negativo)
-        op.push_front('-');
+        getvalue().push_front('-');
     return this;
 }
 
 Arithmetic_Types *Binary::MUL(Arithmetic_Types * op2){
     long double temp= conversion_in_real()*op2->conversion_in_real();
     string str = std::to_string(temp);
-    op.clear();
-    op = (Converti_In_Tipo(str)).op;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
 Arithmetic_Types *Binary::DIV(Arithmetic_Types * op2){
     long double temp= conversion_in_real()/op2->conversion_in_real();
     string str = std::to_string(temp);
-    op.clear();
-    op = (Converti_In_Tipo(str)).op;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
 
 long double Binary::conversion_in_real() const{
+    list<char> op = getvalue();
     int n=op.size()-1;
     long double x=0;
     for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
@@ -73,8 +70,9 @@ void Binary::parser(const string &str){
 
 
 ostream &operator<<(ostream & os, const Binary & B){
+    list<char> op = B.getvalue();
 
-    for (std::list<char>::const_iterator it=B.op.begin(); it != B.op.end(); ++it){
+    for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
         os<<*it;
     }
     return os;
@@ -82,6 +80,8 @@ ostream &operator<<(ostream & os, const Binary & B){
 
 string Binary::ConvertiInStringa() const{
   string rit;
+  list<char> op = getvalue();
+
     for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
         rit.push_back(*it);
     }
@@ -90,13 +90,18 @@ string Binary::ConvertiInStringa() const{
 
 void Binary::setNewValue(const string &str){
     parser(str);
-    op.clear();
+    list<char> op;
     for (string::const_iterator it=str.begin(); it!=str.end(); ++it)
         op.push_back(*it);
+
+    setvalue(op);
 }
 
 
 Binary Binary::Converti_In_Tipo(const string &str){
+
+    Arithmetic_Types::parser_decimal(str);
+
     if(str=="")
         return Binary("0");
 
@@ -121,6 +126,7 @@ Binary Binary::Converti_In_Tipo(const string &str){
 }
 
 string Binary::perorsoBinaryTree(const string &str){
+   parser(str);
     string rit = "Root: ";
       for (string::const_iterator it=str.begin(); it!=str.end(); ++it){
           if(*it == '1')

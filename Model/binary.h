@@ -4,8 +4,6 @@
 
 class Binary: public Arithmetic_Types{
     friend ostream& operator<<(ostream&,const Binary&);
-private:
-    std::list<char> op;
 public:
     Binary(string="0");
 

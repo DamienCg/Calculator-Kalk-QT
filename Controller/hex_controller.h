@@ -6,7 +6,6 @@
 class hex_controller:public Controller{
 public:
     hex_controller();
-    static QString CalcolaHtoOtherTypes(const QString &,const char&);
     static QString CalcolaColore(const QString&);
     static QString CalcolaConversioneDtoH(const QString &);
 };

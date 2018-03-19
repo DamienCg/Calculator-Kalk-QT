@@ -14,13 +14,18 @@ void Front_graphic::setWindowIndex(int i){
     listatipi->switchToType(i);
 }
 
+void Front_graphic::setController(const Controller & c){
+    ctrl = c;
+}
 
-Front_graphic::Front_graphic(QStackedWidget* stack, QWidget *parent):
+
+Front_graphic::Front_graphic(QStackedWidget* stack, QWidget *parent, Controller c):
     QWidget(parent),
     listatipi(new Choose_Type(this)),
     Stack(stack),
     mex(new QMessageBox(this)),
-    layout(new QVBoxLayout(this)){
+    layout(new QVBoxLayout(this)),
+    ctrl(c){
 
     layout->addWidget(listatipi,0,Qt::AlignTop);
     setWindowTitle("Kalk");
@@ -54,4 +59,28 @@ void Front_graphic::showMessagebox(const QString & x) const{
 
 void Front_graphic::addLayout(QWidget* p, int stretch){
     layout->addWidget(p,stretch,Qt::AlignTop);
+}
+
+QString Front_graphic::frontcalcolaoperazioniprimarie(QString op1, QString op2, QString op){
+    if(checkBeforeContinue(op1,op2,op))
+            return ctrl.CostruisciEcalcolaEConvertiop1op2(op1,op2,op);
+
+    return QString();
+}
+
+QString Front_graphic::frontcalcolaconversionetoType(QString input, QString op){
+    QString x = "";
+
+    if(op == "Bin")
+            x = ctrl.CalcolatoOtherTypes(input,'B');
+        else if(op == "Hex")
+            x = ctrl.CalcolatoOtherTypes(input,'H');
+        else if(op == "Oct")
+            x = ctrl.CalcolatoOtherTypes(input,'O');
+        else if(op == "Dec")
+            x = ctrl.CostruisciEcalcolaConversioneTtoD(input);
+        else
+            x = ctrl.CotruisciECalcolaRadice(input);
+
+    return x;
 }

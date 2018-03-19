@@ -28,4 +28,10 @@ QString Controller::CotruisciECalcolaRadice(const QString & b)try{
 catch(MyException){return QString();}
 
 
+QString Controller::CalcolatoOtherTypes(const QString & b, const char & type) try{
+    return QString::fromStdString(calcolatrice.CalcolaTypestoOtherTypes(b.toStdString(),type));
+}
+catch(MyException){return QString();}
+
+
 

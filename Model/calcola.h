@@ -9,10 +9,11 @@ private:
     Arithmetic_Types* op1;
     Arithmetic_Types* op2;
 public:
-    Calcola(Arithmetic_Types* a = nullptr, Arithmetic_Types* b = nullptr);
+     Calcola(Arithmetic_Types* a, Arithmetic_Types* b);
      string calcolaop1op2(const string&, const string&, const string&);
      double calcolaRadice(const string&);
      double calcolaConversioneTtoD(const string&);
+     string CalcolaTypestoOtherTypes(const string &,const char&);
      ~Calcola();
 };
 

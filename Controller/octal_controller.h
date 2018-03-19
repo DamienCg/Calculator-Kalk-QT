@@ -7,7 +7,6 @@
 class octal_controller: public Controller{
 public:
     octal_controller();
-    static QString CalcolaOtoOtherTypes(const QString &b, const char& type);
     static QString CalcolaConversioneDtoO(const QString &);
     static QString CalcolaEmanuel_Swedenborg(const QString&);
 };

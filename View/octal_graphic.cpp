@@ -8,26 +8,13 @@
 #include <QGroupBox>
 
 void octal_graphic::calcolaoperazioniprimarie(){
-    if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
-        QString op=operazioni->currentText();
-        QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
-        Result->setText(w);
-    }
+    QString resulta = frontcalcolaoperazioniprimarie(op1->text(),op2->text(),operazioni->currentText());
+    Result->setText(resulta);
 }
 
 void octal_graphic::calcolaconversioneOtoType(){
-    QString x = "";
-        if(operazioniDiConversione->currentText() == "Hex")
-    x = octal_controller::CalcolaOtoOtherTypes(inputO->text(),'H');
-        else if(operazioniDiConversione->currentText() == "Bin")
-    x = octal_controller::CalcolaOtoOtherTypes(inputO->text(),'B');
-        else if(operazioniDiConversione->currentText() == "Dec")
-    x=ctrl.CostruisciEcalcolaConversioneTtoD(inputO->text());
-        else
-    x=ctrl.CotruisciECalcolaRadice(inputO->text());
-
+    QString x = frontcalcolaconversionetoType(inputO->text(),operazioniDiConversione->currentText());
     resultconvOtoDHB->setText(x);
-
 }
 
 void octal_graphic::calcolaconversioneDtoO(){
@@ -73,6 +60,7 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
   calcolaESdiconv(new QPushButton(this)){
 
  setWindowIndex(octal_graphic::OperationIndex);
+ setController(ctrl);
 
  /* Build View */
  QPushButton* calcola = new QPushButton(this);
@@ -142,7 +130,7 @@ octal_graphic::octal_graphic(QStackedWidget * stack , QWidget *parent):Front_gra
  op2->setPlaceholderText("1734");
  Result->setPlaceholderText("?");
  labelresult->setText("      =   ");
- inputO->setPlaceholderText("8163");
+ inputO->setPlaceholderText("7163");
  inputD->setPlaceholderText("129");
  resultconvOtoDHB->setPlaceholderText("?");
  resultconvDtoO->setPlaceholderText("201");

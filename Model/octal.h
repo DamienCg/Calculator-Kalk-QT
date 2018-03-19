@@ -27,7 +27,7 @@ class Octal: public Arithmetic_Types{
      /*Metodi Di classe*/
      static void parser(const string&);
      static Octal Converti_In_Tipo(const string&);
-     static string Charle_S_and_Emanuel_S(long);
+     static string Charle_S_and_Emanuel_S(const string&);
 };
 
  ostream& operator<<(ostream&,const Octal&);

@@ -134,6 +134,9 @@ void Hex::setNewValue(const string &str){
 }
 
 Hex Hex::Converti_In_Tipo(const string &str){
+
+    Arithmetic_Types::parser_decimal(str);
+
     if(str=="")
         return Hex("0");
 

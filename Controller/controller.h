@@ -13,6 +13,7 @@ public:
   QString CostruisciEcalcolaConversioneTtoD(const QString&);
   QString CostruisciEcalcolaConversioneDtoT(const QString&);
   QString CotruisciECalcolaRadice(const QString&);
+  QString CalcolatoOtherTypes(const QString &,const char&);
   virtual ~Controller()=default;
 };
 

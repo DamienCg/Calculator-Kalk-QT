@@ -7,26 +7,13 @@
 #include <QPushButton>
 
 void binary_graphic::calcolaoperazioniprimarie(){
-    if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
-            QString op=operazioni->currentText();
-            QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
-            Result->setText(w);
-    }
+    QString resulta = frontcalcolaoperazioniprimarie(op1->text(),op2->text(),operazioni->currentText());
+    Result->setText(resulta);
 }
 
 void binary_graphic::calcolaconversioneBtoType(){
-    QString x = "";
-        if(operazioniDiConversione->currentText() == "Hex")
-    x = binary_controller::CalcolaBtoOtherTypes(inputB->text(),'H');
-        else if(operazioniDiConversione->currentText() == "Oct")
-    x = binary_controller::CalcolaBtoOtherTypes(inputB->text(),'O');
-        else if(operazioniDiConversione->currentText() == "Dec")
-    x=ctrl.CostruisciEcalcolaConversioneTtoD(inputB->text());
-        else
-    x=ctrl.CotruisciECalcolaRadice(inputB->text());
-
+    QString x = frontcalcolaconversionetoType(inputB->text(),operazioniDiConversione->currentText());
     resultconvBtoDHO->setText(x);
-
 }
 
 void binary_graphic::calcolaconversioneDtoB(){
@@ -59,6 +46,7 @@ binary_graphic::binary_graphic(QStackedWidget * stack , QWidget *parent):Front_g
     operazioniDiConversione(new QComboBox(this)){
 
     setWindowIndex(binary_graphic::OperationIndex);
+    setController(ctrl);
 
  /* Build View */
  QLabel* labelresult=new QLabel(this);

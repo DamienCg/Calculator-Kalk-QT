@@ -7,25 +7,13 @@
 #include <QGroupBox>
 
 void Hex_Graphic::calcolaoperazioniprimarie(){
-    if(checkBeforeContinue(op1->text(),op2->text(),operazioni->currentText())){
-        QString op=operazioni->currentText();
-        QString w=ctrl.CostruisciEcalcolaEConvertiop1op2(op1->text(),op2->text(),op);
-        Result->setText(w);
-    }
+    QString resulta = frontcalcolaoperazioniprimarie(op1->text(),op2->text(),operazioni->currentText());
+    Result->setText(resulta);
 }
 
 
 void Hex_Graphic::calcolaconversioneHtoType(){
-    QString x = "";
-     if(operazioniDiConversione->currentText() == "Bin")
-        x = hex_controller::CalcolaHtoOtherTypes(inputH->text(),'B');
-     else if(operazioniDiConversione->currentText() == "Oct")
-        x = hex_controller::CalcolaHtoOtherTypes(inputH->text(),'O');
-     else if(operazioniDiConversione->currentText() == "Dec")
-        x=ctrl.CostruisciEcalcolaConversioneTtoD(inputH->text());
-     else
-        x=ctrl.CotruisciECalcolaRadice(inputH->text());
-
+    QString x = frontcalcolaconversionetoType(inputH->text(),operazioniDiConversione->currentText());
     resultconvHtoDBO->setText(x);
 
 }
@@ -75,7 +63,7 @@ Hex_Graphic::Hex_Graphic(QStackedWidget * stack, QWidget * parent):Front_graphic
 
 
  setWindowIndex(Hex_Graphic::OperationIndex);
-
+ setController(ctrl);
 
  /* Build View */
  QPushButton* calcola = new QPushButton(this);

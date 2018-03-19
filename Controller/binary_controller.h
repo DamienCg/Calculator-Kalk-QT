@@ -7,7 +7,6 @@
 class binary_controller: public Controller{
 public:
     binary_controller();
-    static QString CalcolaBtoOtherTypes(const QString &,const char&);
     static QString Calcolapercorsoalbero(const QString &);
     static QString CalcolaConversioneDtoB(const QString &);
 };

@@ -6,11 +6,15 @@
 #include <list>
 using std::string;
 using std::ostream;
+using std::list;
 class QString;
 
 class Arithmetic_Types{
 private:
-
+    list<char> value;
+protected:
+    void setvalue(const list<char>&);
+    list<char> getvalue() const;
 public:
     virtual Arithmetic_Types* ADD(Arithmetic_Types*)=0;
     virtual Arithmetic_Types* SUB(Arithmetic_Types*)=0;
@@ -22,7 +26,7 @@ public:
     virtual double radice() const=0;
     virtual ~Arithmetic_Types()=default;
 
-    static void parser_decimal(const QString &x);
+    static void parser_decimal(const string &str);
 
 };
 
