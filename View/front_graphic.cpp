@@ -61,14 +61,14 @@ void Front_graphic::addLayout(QWidget* p, int stretch){
     layout->addWidget(p,stretch,Qt::AlignTop);
 }
 
-QString Front_graphic::frontcalcolaoperazioniprimarie(QString op1, QString op2, QString op){
+QString Front_graphic::frontcalcolaoperazioniprimarie(const QString & op1, const QString & op2, const QString & op){
     if(checkBeforeContinue(op1,op2,op))
             return ctrl.CostruisciEcalcolaEConvertiop1op2(op1,op2,op);
 
     return QString();
 }
 
-QString Front_graphic::frontcalcolaconversionetoType(QString input, QString op){
+QString Front_graphic::frontcalcolaconversionetoType(const QString& input, const QString & op){
     QString x = "";
 
     if(op == "Bin")

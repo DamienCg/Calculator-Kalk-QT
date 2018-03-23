@@ -1,5 +1,7 @@
 #include "binary.h"
 #include <math.h>
+unsigned int Binary::base=2;
+
 
 Binary::Binary(string str){
     setNewValue(str);
@@ -47,7 +49,7 @@ long double Binary::conversion_in_real() const{
     long double x=0;
     for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
         if(*it == '1')
-            x=x+pow(2,n);
+            x=x+pow(base,n);
         n--;
     }
     return x;
@@ -68,15 +70,6 @@ void Binary::parser(const string &str){
     }
 }
 
-
-ostream &operator<<(ostream & os, const Binary & B){
-    list<char> op = B.getvalue();
-
-    for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
-        os<<*it;
-    }
-    return os;
-}
 
 string Binary::ConvertiInStringa() const{
   string rit;
@@ -115,12 +108,12 @@ Binary Binary::Converti_In_Tipo(const string &str){
 
     string tstr;
     while(x != 0){
-        if( (x%2) == 0)
+        if( (x%base) == 0)
               tstr.insert(0,"0");
             else
             tstr.insert(0,"1");
 
-        x=x/2;
+        x=x/base;
     }
     return Binary(tstr);
 }

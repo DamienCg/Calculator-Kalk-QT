@@ -49,15 +49,15 @@ binary_graphic::binary_graphic(QStackedWidget * stack , QWidget *parent):Front_g
     setController(ctrl);
 
  /* Build View */
- QLabel* labelresult=new QLabel(this);
+ QLabel* labelresult=new QLabel(this);//
  QLabel* labelcalpercorso=new QLabel(this);
- QLabel* labeloperazioni=new QLabel(this);
- QPushButton* calcola=new QPushButton(this);
- QLabel* labelconversioneBtoDHO=new QLabel(this);
- QLabel* labelconversioneDtoB=new QLabel(this);
+ QLabel* labeloperazioni=new QLabel(this);//
+ QPushButton* calcola=new QPushButton(this);//
+ QLabel* labelconversioneBtoDHO=new QLabel(this);//
+ QLabel* labelconversioneDtoB=new QLabel(this);//
  QPushButton*calcolapercorso=new QPushButton(this);
- QPushButton* calcolaconvDtoB=new QPushButton(this);
- QPushButton* calcolaconvBtoDHO=new QPushButton(this);
+ QPushButton* calcolaconvDtoB=new QPushButton(this);//
+ QPushButton* calcolaconvBtoDHO=new QPushButton(this);//
  QPushButton* calcolapercorsosultop1op2 = new QPushButton(this);
 
  /* Logical View TOP */
@@ -105,7 +105,7 @@ binary_graphic::binary_graphic(QStackedWidget * stack , QWidget *parent):Front_g
 
  /* Set View */
  perorsoalbero->setPlaceholderText("Root: ->dx->sx->dx");
- op1->setPlaceholderText("11001100");
+ op1->setPlaceholderText("0110011");
  operazioni->addItem("+");
  operazioni->addItem("-");
  operazioni->addItem("*");

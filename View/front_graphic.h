@@ -19,6 +19,7 @@ private:
     QVBoxLayout* layout;
     int windowIndex;
     Controller ctrl;
+
 protected:
     void setWindowIndex(int);
     void setController(const Controller&);
@@ -27,8 +28,8 @@ public:
     bool checkBeforeContinue(const QString &,const QString &, const QString &)const;
     void showMessagebox(const QString &)const;
     void addLayout(QWidget*,int);
-    QString frontcalcolaoperazioniprimarie(QString,QString,QString);
-    QString frontcalcolaconversionetoType(QString,QString);
+    QString frontcalcolaoperazioniprimarie(const QString&,const QString& ,const QString&);
+    QString frontcalcolaconversionetoType(const QString&,const QString&);
 };
 
 #endif // FRONTGRAPHIC_H

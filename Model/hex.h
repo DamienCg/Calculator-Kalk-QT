@@ -3,9 +3,7 @@
 #include "arithmetic_types.h"
 
 class Hex: public Arithmetic_Types{
-   friend ostream& operator<<(ostream&,const Hex&);
 private:
-    std::list<char> hexadecimal;
     static unsigned int base;
     static const char sure_values[22];
     static unsigned int sure_values_lenght;
@@ -27,6 +25,4 @@ public:
     static Hex Converti_In_Tipo(const string&);
     static int coverti_char_in_int(char);
 };
-
-ostream& operator<<(ostream&,const Hex&);
 #endif // HEX_H

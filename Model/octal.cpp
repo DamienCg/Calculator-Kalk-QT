@@ -14,8 +14,7 @@ Octal::Octal(string str){
 Arithmetic_Types *Octal::ADD(Arithmetic_Types * op2){
     long double temp= conversion_in_real()+op2->conversion_in_real();
     string str = std::to_string(temp);
-    oct.clear();
-    oct = (Converti_In_Tipo(str)).oct;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
@@ -27,55 +26,57 @@ Arithmetic_Types *Octal::SUB(Arithmetic_Types * op2){
         temp=temp*-1;
     }
     string str = std::to_string(temp);
-    oct.clear();
-    oct = (Converti_In_Tipo(str)).oct;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     if(negativo)
-        oct.push_front('-');
+        getvalue().push_front('-');
     return this;
 }
 
 Arithmetic_Types *Octal::MUL(Arithmetic_Types * op2){
     long double temp= conversion_in_real()*op2->conversion_in_real();
     string str = std::to_string(temp);
-    oct.clear();
-    oct = (Converti_In_Tipo(str)).oct;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
 Arithmetic_Types *Octal::DIV(Arithmetic_Types * op2){
     long double temp= conversion_in_real()/op2->conversion_in_real();
     string str = std::to_string(temp);
-    oct.clear();
-    oct = (Converti_In_Tipo(str)).oct;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
 long double Octal::conversion_in_real() const{
 
-    int size=oct.size()-1;
-    long double op1=0; long double tot=0;
-        for (std::list<char>::const_iterator it=oct.begin(); it != oct.end(); ++it){
-            char a = (*it);
-            op1 = a-48;
-            tot=tot + (op1*pow(base,size));
-            size--;
-        }
-        return tot;
+    list<char> op = getvalue();
+    int n=op.size()-1;
+    long double x=0;long double tot=0;
+    for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
+        char a = (*it);
+        x = a-48;
+        tot=tot + (x*pow(base,n));
+        n--;
+    }
+    return tot;
 }
 
 string Octal::ConvertiInStringa() const{
     string rit;
-    for (std::list<char>::const_iterator it=oct.begin(); it != oct.end(); ++it){
-        rit.push_back(*it);
-    }
-    return rit;
+    list<char> op = getvalue();
+
+      for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
+          rit.push_back(*it);
+      }
+      return rit;
 }
 
 void Octal::setNewValue(const string &str){
     parser(str);
-    oct.clear();
-        for (string::const_iterator it = str.begin(), end = str.end(); it != end; ++it)
-            oct.push_back(*it);
+    list<char> op;
+    for (string::const_iterator it=str.begin(); it!=str.end(); ++it)
+        op.push_back(*it);
+
+    setvalue(op);
 }
 
 Octal Octal::Converti_In_Tipo(const string &str){
@@ -88,27 +89,31 @@ Octal Octal::Converti_In_Tipo(const string &str){
     const char *cstr = str.c_str();
     long int x = std::strtol(cstr,nullptr,10);
 
-Octal aux;
-if(x==0){aux.oct.push_front('0'); return aux;}
+    if(x == 0)
+        return Octal("0");
+    if(x == 1)
+        return  Octal("1");
 
+    string tstr;
  while(x>0){
     int resto=x%base;
     char temp=sure_values[resto];
-    aux.oct.push_front(temp);
+    tstr=temp+tstr;
     x=x/base;
  }
- return aux;
+ return Octal(tstr);
 }
 
 string Octal::Charle_S_and_Emanuel_S(const string &str){
 
     Arithmetic_Types::parser_decimal(str);
-    string rit = "";
+    string rit = "";    
 
     Octal temp = Converti_In_Tipo(str);
-    for (std::list<char>::const_iterator it=temp.oct.begin(); it != temp.oct.end(); ++it){
+    list<char> op = temp.getvalue();
+    for (list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
         char a = (*it);
-        int n = a-48;
+        int n = a-48;        
         rit.push_back(Emanuel_Swedenborg[n]);
     }
     return rit;
@@ -134,12 +139,4 @@ void Octal::parser(const string &str){
            throw MyException(err);
           lanciaecc=true;
       }
-}
-
-
-ostream &operator<<(ostream & os, const Octal & B){
-    for (std::list<char>::const_iterator it=B.oct.begin(); it != B.oct.end(); ++it){
-        os<<*it;
-    }
-    return os;
 }

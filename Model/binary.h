@@ -3,7 +3,8 @@
 #include "arithmetic_types.h"
 
 class Binary: public Arithmetic_Types{
-    friend ostream& operator<<(ostream&,const Binary&);
+private:
+    static unsigned int base;
 public:
     Binary(string="0");
 
@@ -22,7 +23,5 @@ public:
     static Binary Converti_In_Tipo(const string&);
     static string perorsoBinaryTree(const string&);
 };
-
-ostream& operator<<(ostream&,const Binary&);
 
 #endif // BINARY_H

@@ -12,8 +12,8 @@ Hex::Hex(string str){
 Arithmetic_Types *Hex::ADD(Arithmetic_Types * op2){
     long double temp= conversion_in_real()+op2->conversion_in_real();
     string str = std::to_string(temp);
-    hexadecimal.clear();
-    hexadecimal = (Converti_In_Tipo(str)).hexadecimal;
+    Hex aux =Converti_In_Tipo(str);
+    setvalue(aux.getvalue());
     return this;
 }
 
@@ -25,26 +25,23 @@ Arithmetic_Types *Hex::SUB(Arithmetic_Types * op2){
         temp=temp*-1;
     }
     string str = std::to_string(temp);
-    hexadecimal.clear();
-    hexadecimal = (Converti_In_Tipo(str)).hexadecimal;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     if(negativo)
-        hexadecimal.push_front('-');
+        getvalue().push_front('-');
     return this;
 }
 
 Arithmetic_Types *Hex::MUL(Arithmetic_Types * op2){
     long double temp= conversion_in_real()*op2->conversion_in_real();
     string str = std::to_string(temp);
-    hexadecimal.clear();
-    hexadecimal = (Converti_In_Tipo(str)).hexadecimal;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
 Arithmetic_Types *Hex::DIV(Arithmetic_Types * op2){
     long double temp= conversion_in_real()/op2->conversion_in_real();
     string str = std::to_string(temp);
-    hexadecimal.clear();
-    hexadecimal = (Converti_In_Tipo(str)).hexadecimal;
+    setvalue((Converti_In_Tipo(str)).getvalue());
     return this;
 }
 
@@ -96,41 +93,36 @@ int Hex::coverti_char_in_int(char x){
 return rit;
 }
 
-
-ostream &operator<<(ostream & os, const Hex & B){
-
-    for (std::list<char>::const_iterator it=B.hexadecimal.begin(); it != B.hexadecimal.end(); ++it){
-        os<<*it;
-    }
-    return os;
-}
-
-
 long double Hex::conversion_in_real() const{
 
-    int n=hexadecimal.size()-1;
-    long double op1=0; long double tot=0;
-        for (std::list<char>::const_iterator it=hexadecimal.begin(); it != hexadecimal.end(); ++it){
-            op1 = coverti_char_in_int(*it);
-            tot=tot + (op1*pow(base,n));
-            n--;
-        }
-        return tot;
+    list<char> op = getvalue();
+    int n=op.size()-1;
+    long double x=0;long double tot=0;
+    for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
+        x = coverti_char_in_int(*it);
+        tot=tot + (x*pow(base,n));
+        n--;
+    }
+    return tot;
 }
 
 string Hex::ConvertiInStringa() const{
     string rit;
-    for (std::list<char>::const_iterator it=hexadecimal.begin(); it != hexadecimal.end(); ++it){
-            rit.push_back(*it);
-     }
-    return rit;
+    list<char> op = getvalue();
+
+      for (std::list<char>::const_iterator it=op.begin(); it != op.end(); ++it){
+          rit.push_back(*it);
+      }
+      return rit;
 }
 
 void Hex::setNewValue(const string &str){
     parser(str);
-    hexadecimal.clear();
-        for (string::const_iterator it = str.begin(), end = str.end(); it != end; ++it)
-            hexadecimal.push_back(*it);
+    list<char> op;
+    for (string::const_iterator it=str.begin(); it!=str.end(); ++it)
+        op.push_back(*it);
+
+    setvalue(op);
 }
 
 Hex Hex::Converti_In_Tipo(const string &str){
@@ -143,16 +135,19 @@ Hex Hex::Converti_In_Tipo(const string &str){
     const char *cstr = str.c_str();
     long int x = std::strtol(cstr,nullptr,10);
 
- Hex aux;
-  if(x==0){aux.hexadecimal.push_front('0'); return aux;}
+    if(x == 0)
+        return Hex("0");
+    if(x == 1)
+        return  Hex("1");
 
+    string tstr;
      while(x>0){
         int resto=x%base;
         char temp=sure_values[resto];
-        aux.hexadecimal.push_front(temp);
+        tstr=temp+tstr;
         x=x/base;
      }
-    return aux;
+    return Hex(tstr);
 }
 
 double Hex::radice() const{

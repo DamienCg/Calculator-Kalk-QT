@@ -5,8 +5,6 @@
 hex_controller::hex_controller(): Controller(new Hex(), new Hex()){}
 
 
-
-
 QString hex_controller::CalcolaColore(const QString &t)try{
     Hex::parser(t.toStdString());
     return "background-color: #"+t+"; border-radius: 6px;";
