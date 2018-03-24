@@ -26,7 +26,7 @@ public:
     virtual double radice() const=0;
     virtual ~Arithmetic_Types()=default;
 
-    static void parser_decimal(const string &str);
+    static void parser_decimal(const string &);
 
 };
 

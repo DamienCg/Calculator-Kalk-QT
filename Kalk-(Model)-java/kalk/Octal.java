@@ -146,6 +146,7 @@ return rit;
 }
 return rit;
 }
+
     
     public void Stampa(){
         System.out.println(op.toString());

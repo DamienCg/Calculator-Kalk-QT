@@ -47,18 +47,6 @@ public class Use {
         System.out.println(z.radice());
         */
         
-        //Fraction Part
-        /*
-        arithmetic_types x=new Fraction(1,2);
-        arithmetic_types y=new Fraction(3,7);
-        System.out.println(y.conversion_in_real());
-        String num="12.628";
-        x=Fraction.conversion_in_fraction(num);
-        Fraction z=new Fraction(0,1);
-        x=x.DIV(y);
-        z = (Fraction)x; // downcast
-        z.Stampa();
-        */
     }
     
 }
