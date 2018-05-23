@@ -23,8 +23,11 @@ Arithmetic_Types *Binary::SUB(Arithmetic_Types * op2){
     }
     string str = std::to_string(temp);
     setvalue((Converti_In_Tipo(str)).getvalue());
-    if(negativo)
-        getvalue().push_front('-');
+    if(negativo){
+        list<char> s = getvalue();
+        s.push_front('-');
+        setvalue(s);
+    }
     return this;
 }
 

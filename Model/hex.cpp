@@ -26,8 +26,11 @@ Arithmetic_Types *Hex::SUB(Arithmetic_Types * op2){
     }
     string str = std::to_string(temp);
     setvalue((Converti_In_Tipo(str)).getvalue());
-    if(negativo)
-        getvalue().push_front('-');
+    if(negativo){
+        list<char> s = getvalue();
+        s.push_front('-');
+        setvalue(s);
+    }
     return this;
 }
 
@@ -46,10 +49,14 @@ Arithmetic_Types *Hex::DIV(Arithmetic_Types * op2){
 }
 
 
-int Hex::coverti_char_in_int(char x){
+int Hex::coverti_char_in_int(char p){
     int rit=0;
 
-    switch (x){
+    QChar x(p);
+    x = x.toUpper();
+    char check = x.toLatin1();
+
+    switch (check){
     case 'A':
         rit= 10;
     break;
@@ -68,26 +75,8 @@ int Hex::coverti_char_in_int(char x){
     case 'F':
         rit= 15;
     break;
-    case 'a':
-        rit= 10;
-    break;
-    case 'b':
-        rit= 11;
-    break;
-    case 'c':
-        rit= 12;
-    break;
-    case 'd':
-        rit= 13;
-    break;
-    case 'e':
-        rit= 14;
-    break;
-    case 'f':
-        rit= 15;
-    break;
     default:
-         rit = x-48;
+         rit = check-48;
      break;
     }
 return rit;
